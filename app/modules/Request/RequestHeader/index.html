@@ -1,0 +1,85 @@
+<div class="request-header-row container-lg" ng-controller="RequestHeaderController">
+  <div class="row">
+    <div class="title col-3" style="align-self: center;">
+      <span style="font-size: 20px;"><b>CAR BOOKING</b></span>
+    </div>
+    <div class="tool-bar col-9">
+        <button class="btn-export-excel" >Export Excel</button>
+        <div class="dropdown">
+          <button
+            class="btn-filter btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            data-bs-auto-close="false"
+          >
+            Filter
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" role="menu">
+            <li>
+              <div class="row">
+                <div class="col-md-3">
+                  <span>Filter</span>
+                </div>
+                <div class="col-md-9">
+                  <button class="btn-apply" ng-click="applyFilter()">Apply</button>
+                  <button class="btn-clear" ng-click="clearFilter()">Clear</button>
+                  <button class="btn-close"></button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div>
+                  <label><b>Request Code</b></label>
+                  <input placeholder="Key words ..." ng-model="requestCode"/>
+              </div>
+            </li>
+            <li>
+              <div>
+                <label><b>Created</b></label>
+                <p>Result: {{dateRange}}</p>
+                <div class="input-group form-group" ng-if="toasts" style="color: red">
+                  {{message}}
+                </div>
+                <div>
+                  <span>Start Date</span>
+                  <input type="date" ng-model="startDate" />
+                </div>
+                <div>
+                  <span>End Date</span>
+                  <input type="date" ng-model="endDate" />
+                </div>
+              </div>
+            </li>
+            <li>
+              <div>
+                  <label><b>Created by</b></label>
+                  <select class="form-select"
+                  ng-model="selectedCreatedBy"
+                  ng-options="user as (user.FirstName + ' ' + user.LastName) for user in userList"
+                  >
+                  <option value="">All</option>
+                  </select>
+              </div>
+            </li>
+            <li>
+              <div>
+                  <label><b>Status</b></label>
+                  <select class="form-select"
+                  ng-model="selectedStatus"
+                  ng-options="status for status in statusList"
+                  >
+                  <option value="">All</option>
+                  </select>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+        <button class="btn-create">Create new</button>
+      </div>
+    </div>
+  </div>
+</div>
+

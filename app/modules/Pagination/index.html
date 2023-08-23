@@ -1,0 +1,26 @@
+<div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination" style="place-content: center; margin-bottom: 0px">
+      <li
+        ng-class="pagination.currentPage === 1 ? 'page-item disabled' : 'page-item'"
+        ng-click="handleClickPreviousPage()"
+      >
+        <span class="page-link">Previous</span>
+      </li>
+      <li
+        ng-class="index === pagination.currentPage ? 'page-item active': 'page-item'"
+        ng-repeat="index in getRange(1, pagination.totalPage)"
+      >
+        <span class="page-link" ng-click="handleClickPage(index)"
+          >{{index}}</span
+        >
+      </li>
+      <li
+        ng-class="pagination.currentPage === pagination.totalPage ? 'page-item disabled' : 'page-item'"
+        ng-click="handleClickNextPage()"
+      >
+        <span class="page-link">Next</span>
+      </li>
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,44 @@
+.request-header-row {
+  display: block;
+  position: fixed;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: solid 1px;
+}
+
+.request-header-row .tool-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.request-header-row .tool-bar .btn-export-excel {
+  margin-right: 10px;
+  font-size: 14px;
+  border: solid 0.5px;
+  background: white;
+}
+
+.request-header-row .tool-bar .btn-filter {
+  margin-right: 10px;
+  background-color: white;
+  color: black;
+}
+
+.request-header-row .tool-bar .dropdown .dropdown-menu {
+  width: 300px;
+  max-height: 80vh;
+  padding: 15px;
+}
+
+/* .dropdown-menu.show {
+  top: 286px !important;
+  left: auto !important;
+  right: 0px !important;
+  display: flex !important;
+} */
+
+@media (min-width: 1200px) {
+  .container-lg {
+    max-width: 1660px !important;
+  }
+}

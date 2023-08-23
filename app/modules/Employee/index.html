@@ -1,0 +1,73 @@
+<div>
+  <h3>Employee List</h3>
+  <form>
+    <div>
+      <label>First Name: </label>
+      <input
+        type="text"
+        ng-model="firstName"
+        placeholder="First Name"
+        required
+      />
+      <label>Last Name: </label>
+      <input type="text" ng-model="lastName" placeholder="Last Name" required />
+      <label>Email: </label>
+      <input type="email" ng-model="email" placeholder="Email" required />
+    </div>
+    <button type="submit" ng-click="createNewEmployee()">
+      Add new Employee
+    </button>
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Function</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="employee in employeeList track by $index">
+        <th scope="row">{{$index + 1}}</th>
+        <td ng-if="$index !== editIndex">{{employee.FirstName}}</td>
+        <td ng-if=" $index !==editIndex">{{employee.LastName}}</td>
+        <td ng-if="$index !== editIndex">{{employee.Email}}</td>
+
+        <!-- Edit -->
+        <td ng-if="$index === editIndex">
+          <input type="text" ng-model="editData.FirstName" required />
+        </td>
+        <td ng-if="$index === editIndex">
+          <input type="text" ng-model="editData.LastName" required />
+        </td>
+        <td ng-if="$index === editIndex">
+          <input type="email" ng-model="editData.Email" required />
+        </td>
+        <td>
+          <button ng-click="editEmployee($index)" ng-if="$index !== editIndex">
+            Edit
+          </button>
+          <button
+            ng-click="deleteEmployee($index)"
+            ng-if="$index !== editIndex"
+          >
+            Delete
+          </button>
+          <button
+            type="submit"
+            ng-click="saveEmployee($index)"
+            ng-if="$index === editIndex"
+          >
+            Save
+          </button>
+          <button ng-click="cancelEdit()" ng-if="$index === editIndex">
+            Cancel
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
