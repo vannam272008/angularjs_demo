@@ -20,12 +20,14 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link
+    <!-- <link
       rel="stylesheet"
-      href="lib/html5-boilerplate/dist/css/normalize.css"
-    />
-    <link rel="stylesheet" href="lib/html5-boilerplate/dist/css/main.css" />
-    <link rel="stylesheet" href="app.css" />
+      href="/app/lib/html5-boilerplate/dist/css/normalize.css"
+    /> -->
+    <!-- <link
+      rel="stylesheet"
+      href="/app/lib/html5-boilerplate/dist/css/main.css"
+    /> -->
     <link
       href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"
       rel="stylesheet"
@@ -47,7 +49,6 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <script src="lib/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 
     <!-- Include DateRangePicker CSS  -->
     <link
@@ -73,18 +74,23 @@
     />
 
     <!--Custom styles-->
+    <link rel="stylesheet" href="/app.css" />
     <link rel="stylesheet" href="/modules/Login/Login.css" />
     <link rel="stylesheet" href="/modules/Header/Header.css" />
-    <link rel="stylesheet" href="modules/Footer/Footer.css" />
-    <link rel="stylesheet" href="modules/Spinners/Spinners.css" />
+    <link rel="stylesheet" href="/modules/Footer/Footer.css" />
+    <link rel="stylesheet" href="/modules/Spinners/Spinners.css" />
     <!-- <link rel="stylesheet" href="/modules/Sidebar/Sidebar.css" /> -->
 
     <!------------- REQUEST STYLE ------------------>
     <link rel="stylesheet" href="/modules/Request/Request.css" />
-    <link rel="stylesheet" href="modules/Sidebar/Sidebar.css" />
+    <link rel="stylesheet" href="/modules/Sidebar/Sidebar.css" />
     <link
       rel="stylesheet"
-      href="modules/Request/RequestHeader/RequestHeader.css"
+      href="/modules/Request/RequestHeader/RequestHeader.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/modules/Request/CreateRequest/CreateRequest.css"
     />
     <!------------- REQUEST STYLE ------------------>
     <base href="/" />
@@ -95,7 +101,7 @@
     <div ng-controller="HeaderController">
       <div
         ng-if="userLogin.isLogin"
-        ng-include="'modules/Header/index.html'"
+        ng-include="'/modules/Header/index.html'"
       ></div>
     </div>
     <!------------------------- HEADER -------------------->
@@ -116,7 +122,7 @@
       <!------------------------- BODY -------------------->
 
       <!------------------------- FOOTER -------------------->
-      <div ng-include="'modules/Footer/index.html'"></div>
+      <div ng-include="'/modules/Footer/index.html'"></div>
       <!------------------------- FOOTER -------------------->
     </div>
 
@@ -128,6 +134,7 @@
     <script src="lib/angular-loader/angular-loader.js"></script>
     <script src="lib/angular-mocks/angular-mocks.js"></script>
     <script src="app.js"></script>
+    <script src="lib/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 
     <!-- -------MODULES------------ -->
     <script src="modules/Employee/employee.js"></script>
@@ -142,6 +149,7 @@
     <script src="modules/Request/Request.js"></script>
     <script src="modules/Sidebar/Sidebar.js"></script>
     <script src="modules/Request/RequestHeader/RequestHeader.js"></script>
+    <script src="modules/Request/CreateRequest/CreateRequest.js"></script>
     <!-- ---------------------------- -->
 
     <!-- ---------------------------- -->
@@ -153,7 +161,7 @@
     <!-- ---------------------------- -->
 
     <!--------------------- JQUERY ------------->
-    <script src="modules/Sidebar/Sidebar.js"></script>
+    <!-- <script src="modules/Sidebar/Sidebar.js"></script> -->
     <!-- ---------------------------- -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>

@@ -24,8 +24,10 @@ angular.module('LoginServices', [])
         var user = {
             isLogin: false,
             userInfo: {
-                FullName: ""
-            }
+                FullName: "",
+                id: ""
+            },
+
         };
 
         return {

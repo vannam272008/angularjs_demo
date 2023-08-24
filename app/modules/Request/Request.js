@@ -1,10 +1,19 @@
 'use strict';
 
 angular.module('Request', ['ngRoute'])
+    // .config(['$routeProvider', function ($routeProvider) {
+    //     $routeProvider
+    //         .when('/request/create', {
+    //             templateUrl: 'modules/Request/CreateRequest/index.html',
+    //             controller: 'CreateRequestController',
+    //             resolve: {
+    //                 auth: checkAuthentication
+    //             }
+    //         })
+    // }])
     .controller('RequestController', ['$scope', 'requestService', 'requestHeaderService', function ($scope, requestService, requestHeaderService) {
         $scope.tab = "get-all";
         $scope.search = "";
-        $scope.firstFetch = true;
         $scope.test = "123";
         $scope.filter = {
             requestCode: "",
@@ -47,7 +56,6 @@ angular.module('Request', ['ngRoute'])
 
         $scope.$watch('pagination.currentPage', function (newPage, oldPage) {
             if (newPage !== oldPage) {
-                console.log("pagination");
                 fetchRequestList();
             }
         });
@@ -56,7 +64,6 @@ angular.module('Request', ['ngRoute'])
             $scope.loading = true;
             requestService.getRequests("get-all", $scope.filter.requestCode, $scope.filter.createdFrom, $scope.filter.createdTo, $scope.filter.senderId, $scope.filter.status, $scope.pagination.currentPage, $scope.pagination.perPage, "")
                 .then((res) => {
-                    console.log(res.data.Data);
                     $scope.requestList = res.data.Data.ListData;
                     $scope.pagination = {
                         currentPage: res.data.Data.CurrentPage,
@@ -66,7 +73,6 @@ angular.module('Request', ['ngRoute'])
                 })
                 .finally(() => {
                     $scope.loading = false;
-                    $scope.firstFetch = false;
                     $scope.test = "456";
                 })
                 .catch((e) => {
@@ -75,11 +81,7 @@ angular.module('Request', ['ngRoute'])
         };
 
         // console.log("hello");
-        if ($scope.firstFetch === true) {
-            fetchRequestList();
-            console.log("hello: ", $scope.test);
-        }
-
+        fetchRequestList();
 
 
         $scope.$watch(() => {

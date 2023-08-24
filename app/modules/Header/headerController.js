@@ -25,7 +25,8 @@ angular.module('Header', ['ngRoute', 'apiServices'])
                 userLoginService.setUser({
                     isLogin: true,
                     userInfo: {
-                        FullName: res.data.Data.FirstName + ' ' + res.data.Data.LastName
+                        FullName: res.data.Data.FirstName + ' ' + res.data.Data.LastName,
+                        id: res.data.Data.Id
                     }
                 });
             })

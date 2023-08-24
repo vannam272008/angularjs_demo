@@ -12,7 +12,8 @@ angular.module('myApp', [
   'DriverServices',
   'Request',
   'Sidebar',
-  'RequestHeader'
+  'RequestHeader',
+  'CreateRequest'
 ])
   .config(['$locationProvider', '$routeProvider', '$sceProvider', function ($locationProvider, $routeProvider, $sceProvider) {
     $locationProvider.html5Mode(true);
@@ -30,6 +31,13 @@ angular.module('myApp', [
       .when('/request', {
         templateUrl: 'modules/Request/index.html',
         controller: 'RequestController',
+        resolve: {
+          auth: checkAuthentication
+        }
+      })
+      .when('/request/create', {
+        templateUrl: 'modules/Request/CreateRequest/index.html',
+        controller: 'CreateRequestController',
         resolve: {
           auth: checkAuthentication
         }

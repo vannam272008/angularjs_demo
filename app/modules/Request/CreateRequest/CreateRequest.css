@@ -1,0 +1,103 @@
+.create-request {
+  display: flex;
+  font-size: 14px;
+}
+
+.create-request .create-request-content {
+  width: 100%;
+  margin-left: 30px;
+  padding-right: 10px;
+  height: calc(100vh - 85px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.create-request .create-request-content .create-request-header {
+  border-bottom: 1px solid #e1e1e1;
+  border-top-left-radius: 0;
+  margin-right: -20px;
+  padding-bottom: 9.5px;
+  padding-top: 9px;
+  background-color: #f5f6fa;
+  min-height: 61px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.create-request-body .row {
+  margin-top: 15px;
+}
+
+.create-request-body .row .col-3 input {
+  color: blue;
+  background-color: #f5f6fa;
+  min-height: 38px;
+  border-top: unset;
+  border-left: unset;
+  border-right: unset;
+}
+
+.create-request-body .row .col-3 input:disabled {
+  color: blue;
+  background-color: #f5f6fa;
+  min-height: 38px;
+  border-top: unset;
+  border-left: unset;
+  border-right: unset;
+  border-bottom: solid 2px grey;
+}
+
+.create-request-body .row .col-3 select {
+  color: blue;
+  background-color: #f5f6fa;
+  min-height: 38px;
+  border-top: unset;
+  border-left: unset;
+  border-right: unset;
+  border-bottom: solid 1px slategrey;
+}
+
+.send-to-approvers .row .col-md-4 {
+  margin-top: 10px;
+}
+/* 
+.create-request-body .send-to-approvers li::marker {
+  visibility: hidden;
+}
+
+::marker {
+  display: none;
+  visibility: hidden;
+} */
+
+/* .create-request-attachment input[type="file"] {
+  display: none;
+} */
+
+/* Custom file input */
+
+/* .custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: "Add attachments";
+  display: inline-block;
+  background: linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+} */

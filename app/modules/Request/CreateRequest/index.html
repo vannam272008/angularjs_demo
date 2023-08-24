@@ -1,0 +1,252 @@
+<div ng-controller="HeaderController">
+  <div ng-if="loading" ng-include="'modules/Spinners/index.html'"></div>
+  <div class="create-request" ng-if="!loading">
+    <div class="create-request-sidebar">
+      <div
+        ng-include="'modules/Sidebar/index.html'"
+        style="height: calc(100vh - 77px)"
+      ></div>
+    </div>
+    <div class="create-request-content">
+      <div class="create-request-header">
+        <button>Return</button>
+        <button>Save Draft</button>
+        <button>Submit</button>
+      </div>
+      <div class="create-request-body">
+        <h2 style="text-align: center; margin-top: 10px">
+          <b>CAR BOOKING REQUEST</b>
+        </h2>
+        <!------------------- Row 1 ---------------------------------->
+        <div class="row">
+          <div class="col-3">
+            <label style="width: 100%"><b>Applicant</b></label>
+            <input
+              style="width: 100%; cursor: not-allowed"
+              ng-model="userLogin.userInfo.FullName"
+              disabled
+            />
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>Department</b></label>
+            <select
+              class="form-select"
+              style="width: 100%"
+              ng-model="selectedDepartment"
+              ng-options="department as (department.Name) for department in departmentList"
+            ></select>
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>User</b></label>
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              style="width: 100%"
+            >
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>Mobile</b></label>
+            <input type="text" style="width: 100%" />
+          </div>
+        </div>
+        <!------------------- Row 1 ---------------------------------->
+
+        <!------------------- Row 2 ---------------------------------->
+        <div class="row">
+          <div class="col-3">
+            <label style="width: 100%"><b>Cost center</b></label>
+            <input type="number" style="width: 100%" />
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>Total passengers</b></label>
+            <input type="number" style="width: 100%" />
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>Usage time from</b></label>
+            <input type="datetime-local" style="width: 100%" />
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>Usage time to</b></label>
+            <input type="datetime-local" style="width: 100%" />
+          </div>
+        </div>
+        <!------------------- Row 2---------------------------------->
+
+        <!------------------- Row 3 ---------------------------------->
+        <div class="row">
+          <div class="col-create-request-aplicant col-3">
+            <label style="width: 100%"><b>Pick time</b></label>
+            <input type="datetime-local" value="" style="width: 100%" />
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>Pick location</b></label>
+            <input type="text" style="width: 100%" />
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>Destination</b></label>
+            <input type="text" style="width: 100%" />
+          </div>
+          <div class="col-3">
+            <label style="width: 100%"><b>Reason</b></label>
+            <input type="text" style="width: 100%" />
+          </div>
+        </div>
+        <!------------------- Row 3 ---------------------------------->
+
+        <!------------------- Note ---------------------------------->
+        <div style="margin-top: 30px">
+          <span
+            >Chú ý: Trường hợp Phòng Hành Chính không đủ xe để đáp ứng yêu cầu
+            điều xe của bộ phận, Phòng Hành Chính đề nghị sắp xếp phương tiện
+            khác thay thế (thuê xe ngoài, hoặc dùng thẻ taxi, Grab,...) và chi
+            phí sẽ hạch toán theo bộ phận yêu cầu.</span
+          >
+          <div style="margin-top: 10px">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio1"
+                value="option1"
+              />
+              <label class="form-check-label" for="inlineRadio1">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio2"
+                value="option2"
+                checked
+              />
+              <label class="form-check-label" for="inlineRadio2">No</label>
+            </div>
+          </div>
+        </div>
+        <!------------------- Note ---------------------------------->
+
+        <!------------------- Attachments ---------------------------------->
+        <div class="create-request-attachment">
+          <span><b>Attachment(s)</b></span>
+
+          <div>
+            <button for="upload-file-attachment">
+              <span>Add attachments</span>
+              <input id="upload-file-attachment" type="file" multiple hidden />
+            </button>
+            <span>(Maximum 20MB per file)</span>
+          </div>
+        </div>
+        <!------------------- Attachments ---------------------------------->
+
+        <!------------------- Approvers ---------------------------------->
+        <div class="send-to-approvers" style="margin-top: 20px">
+          <span><b>Send to approvers</b></span>
+          <div class="row">
+            <div class="col-md-4">
+              <div>
+                <span><b>Approver</b></span>
+                <button>delete</button>
+                <button>edit</button>
+                <button>move</button>
+              </div>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                style="width: 100%; margin-top: 10px"
+              >
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <div>
+                <span><b>Approver</b></span>
+                <button>delete</button>
+                <button>edit</button>
+                <button>move</button>
+              </div>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                style="width: 100%; margin-top: 10px"
+              >
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <div>
+                <span><b>Approver</b></span>
+                <button>delete</button>
+                <button>edit</button>
+                <button>move</button>
+              </div>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                style="width: 100%; margin-top: 10px"
+              >
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <div>
+                <span><b>Approver</b></span>
+                <button>delete</button>
+                <button>edit</button>
+                <button>move</button>
+              </div>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                style="width: 100%; margin-top: 10px"
+              >
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <div>
+                <span><b>Approver</b></span>
+                <button>delete</button>
+                <button>edit</button>
+                <button>move</button>
+              </div>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                style="width: 100%; margin-top: 10px"
+              >
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div class="col-md-4" style="align-self: center">
+              <button>+ Add Approver</button>
+            </div>
+          </div>
+        </div>
+        <!------------------- Approvers ---------------------------------->
+      </div>
+    </div>
+  </div>
+</div>

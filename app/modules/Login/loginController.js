@@ -17,7 +17,8 @@ angular.module('Login', ['ngRoute', 'LoginServices'])
                             userLoginService.setUser({
                                 isLogin: true,
                                 userInfo: {
-                                    FullName: res.data.Data.userInfo.FullName
+                                    FullName: res.data.Data.userInfo.FullName,
+                                    id: res.data.Data.userInfo.Id
                                 }
                             });
                             localStorage.setItem('Id', res.data.Data.userInfo.Id);
@@ -40,7 +41,8 @@ angular.module('Login', ['ngRoute', 'LoginServices'])
                             userLoginService.setUser({
                                 isLogin: false,
                                 userInfo: {
-                                    FullName: ""
+                                    FullName: "",
+                                    id: ""
                                 }
                             });
                         });
