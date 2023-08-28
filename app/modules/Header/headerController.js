@@ -22,13 +22,18 @@ angular.module('Header', ['ngRoute', 'apiServices'])
 
         if ($scope.token !== null && $scope.userLogin.isLogin === false) {
             userService.getUserProfile().then((res) => {
-                userLoginService.setUser({
-                    isLogin: true,
-                    userInfo: {
-                        FullName: res.data.Data.FirstName + ' ' + res.data.Data.LastName,
-                        id: res.data.Data.Id
-                    }
-                });
+                if (res.data.Success) {
+                    userLoginService.setUser({
+                        isLogin: true,
+                        userInfo: {
+                            FullName: res.data.Data.FirstName + ' ' + res.data.Data.LastName,
+                            id: res.data.Data.Id
+                        }
+                    });
+                } else {
+                    $location.path('/login');
+                }
+
             })
         }
         // -----------------------------------------------------------------//

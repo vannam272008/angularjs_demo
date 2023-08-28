@@ -26,3 +26,68 @@
   padding-left: 0px;
   padding-right: 0px;
 }
+
+/* Status CSS */
+
+.status-tooltip {
+  cursor: pointer;
+  position: relative;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 2px;
+  color: #ffffff;
+}
+
+.status-tooltip .tooltip-created {
+  visibility: hidden;
+  width: 150px;
+  background-color: slategrey;
+  color: whitesmoke;
+  text-align: center;
+  border-radius: 6px;
+  /* Position the tooltip */
+  top: -25px;
+  left: -25px;
+  position: absolute;
+  z-index: 1;
+}
+
+.status-tooltip:hover .tooltip-created {
+  visibility: visible;
+}
+
+.status-approving {
+  border: solid 1px royalblue;
+  border-radius: 5px;
+  background-color: royalblue;
+}
+
+.status-draft {
+  background-color: orange;
+  border: solid 1px orange;
+  border-radius: 5px;
+}
+
+.status-rejected {
+  background-color: red;
+  border: solid 1px red;
+  border-radius: 5px;
+}
+
+.status-approved {
+  background-color: #4ba747;
+  border: solid 1px #4ba747;
+  border-radius: 5px;
+}
+
+.status-canceled {
+  background-color: grey;
+  border: solid 1px grey;
+  border-radius: 5px;
+}
+
+.status-done {
+  background-color: darkgreen;
+  border: solid 1px darkgreen;
+  border-radius: 5px;
+}

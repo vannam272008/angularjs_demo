@@ -1,9 +1,6 @@
 <div>
   <div ng-if="loading" ng-include="'modules/Spinners/index.html'"></div>
-  <div
-    class="list-requests wrapper d-flex align-items-stretch"
-    ng-if="!loading"
-  >
+  <div class="list-requests wrapper d-flex align-items-stretch">
     <div
       ng-include="'modules/Sidebar/index.html'"
       style="height: calc(100vh - 77px)"
@@ -26,13 +23,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="request in requestList">
+            <tr
+              ng-repeat="request in requestList"
+              ng-dblclick="doubleClickDetail(request.Id)"
+            >
               <td style="width: 200px">{{request.RequestCode}}</td>
               <td style="width: 200px">{{request.Department.Name}}</td>
               <td style="width: 200px">{{request.SenderUser.FullName}}</td>
               <td style="width: 200px">{{request.ReceiveUser.FullName}}</td>
-              <td style="width: 200px">
-                {{request.Created | date:'dd/MM/yyyy'}}
+              <td style="width: 200px" class="td-created">
+                <span
+                  class="status-tooltip"
+                  ng-class="classStatus(request.Status)"
+                >
+                  <span class="tooltip-created"> {{request.Status}} </span>
+                  {{request.Created | date:'dd/MM/yyyy'}}
+                </span>
               </td>
               <td style="width: 200px">
                 {{request.UsageFrom | date:'dd/MM/yyyy'}}

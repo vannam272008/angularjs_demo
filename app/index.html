@@ -84,6 +84,7 @@
     <!------------- REQUEST STYLE ------------------>
     <link rel="stylesheet" href="/modules/Request/Request.css" />
     <link rel="stylesheet" href="/modules/Sidebar/Sidebar.css" />
+    <link rel="stylesheet" href="/modules/Pagination/Pagination.css" />
     <link
       rel="stylesheet"
       href="/modules/Request/RequestHeader/RequestHeader.css"
@@ -91,6 +92,10 @@
     <link
       rel="stylesheet"
       href="/modules/Request/CreateRequest/CreateRequest.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/modules/Request/DetailRequest/DetailRequest.css"
     />
     <!------------- REQUEST STYLE ------------------>
     <base href="/" />
@@ -100,7 +105,7 @@
     <!------------------------- HEADER -------------------->
     <div ng-controller="HeaderController">
       <div
-        ng-if="userLogin.isLogin"
+        ng-show="userLogin.isLogin"
         ng-include="'/modules/Header/index.html'"
       ></div>
     </div>
@@ -150,6 +155,7 @@
     <script src="modules/Sidebar/Sidebar.js"></script>
     <script src="modules/Request/RequestHeader/RequestHeader.js"></script>
     <script src="modules/Request/CreateRequest/CreateRequest.js"></script>
+    <script src="modules/Request/DetailRequest/DetailRequest.js"></script>
     <!-- ---------------------------- -->
 
     <!-- ---------------------------- -->
@@ -194,6 +200,8 @@
     <script src="modules/Utils/Authentication/authentication.js"></script>
     <script src="modules/Utils/apiServices.js"></script>
     <script src="modules/Utils/request.js"></script>
+    <script src="modules/Utils/dateFormat.js"></script>
+    <script src="modules/Utils/function.js"></script>
     <!-- ------------------------------------------------------------------------- -->
   </body>
 </html>

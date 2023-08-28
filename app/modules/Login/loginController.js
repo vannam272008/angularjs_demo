@@ -13,18 +13,16 @@ angular.module('Login', ['ngRoute', 'LoginServices'])
             carBookingAPIService.login($scope.loginData)
                 .then((res) => {
                     if (res.data.Success) {
-                        $timeout(() => {
-                            userLoginService.setUser({
-                                isLogin: true,
-                                userInfo: {
-                                    FullName: res.data.Data.userInfo.FullName,
-                                    id: res.data.Data.userInfo.Id
-                                }
-                            });
-                            localStorage.setItem('Id', res.data.Data.userInfo.Id);
-                            localStorage.setItem('token', res.data.Data.jwtToken);
-                            $location.path('/home');
-                        })
+                        userLoginService.setUser({
+                            isLogin: true,
+                            userInfo: {
+                                FullName: res.data.Data.userInfo.FullName,
+                                id: res.data.Data.userInfo.Id
+                            }
+                        });
+                        $location.path('/home');
+                        localStorage.setItem('Id', res.data.Data.userInfo.Id);
+                        localStorage.setItem('token', res.data.Data.jwtToken);
                     } else {
                         $scope.toasts = true;
                         $scope.message = res.data.Message;

@@ -1,5 +1,5 @@
 <div>
-  <nav aria-label="Page navigation example">
+  <nav>
     <ul class="pagination" style="place-content: center; margin-bottom: 0px">
       <li
         ng-class="pagination.currentPage === 1 ? 'page-item disabled' : 'page-item'"
@@ -9,7 +9,7 @@
       </li>
       <li
         ng-class="index === pagination.currentPage ? 'page-item active': 'page-item'"
-        ng-repeat="index in getRange(1, pagination.totalPage)"
+        ng-repeat="index in getRange(1, pagination.totalPage + 1)"
       >
         <span class="page-link" ng-click="handleClickPage(index)"
           >{{index}}</span

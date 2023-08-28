@@ -13,7 +13,8 @@ angular.module('myApp', [
   'Request',
   'Sidebar',
   'RequestHeader',
-  'CreateRequest'
+  'CreateRequest',
+  'DetailRequest'
 ])
   .config(['$locationProvider', '$routeProvider', '$sceProvider', function ($locationProvider, $routeProvider, $sceProvider) {
     $locationProvider.html5Mode(true);
@@ -38,6 +39,13 @@ angular.module('myApp', [
       .when('/request/create', {
         templateUrl: 'modules/Request/CreateRequest/index.html',
         controller: 'CreateRequestController',
+        resolve: {
+          auth: checkAuthentication
+        }
+      })
+      .when('/request/view/:id', {
+        templateUrl: 'modules/Request/DetailRequest/index.html',
+        controller: 'DetailRequestController',
         resolve: {
           auth: checkAuthentication
         }

@@ -46,8 +46,7 @@
   margin-top: 0.125rem;
   padding-left: 3rem;
 }
-.btn-toggle-nav a:hover,
-.btn-toggle-nav a:focus {
+.btn-toggle-nav a:hover {
   background-color: #d2f4ea;
 }
 
@@ -72,6 +71,11 @@
 
 .request-sidebar {
   color: #fff;
+}
+
+.request-sidebar .li-clicked {
+  font-weight: bold;
+  background-color: #d2f4ea;
 }
 
 .sidebar-footer {

@@ -27,9 +27,15 @@ angular.module('apiServices', [])
             return $http.get(baseUrl + endpoint, getConfig());
         }
 
+        const getApproverUsers = (departmentId) => {
+            const endpoint = "/userRole/all-approvers/" + departmentId;
+            return $http.get(baseUrl + endpoint, getConfig());
+        }
+
         this.getUserProfile = getUserProfile;
         this.getUsers = getUsers;
         this.getUsersByDepartmentId = getUsersByDepartmentId;
+        this.getApproverUsers = getApproverUsers;
 
     }])
     .service('requestService', ['$http', function ($http) {
@@ -38,7 +44,51 @@ angular.module('apiServices', [])
             return $http.get(baseUrl + endpoint, getConfig());
         };
 
+        const postRequest = (data) => {
+            var formData = new FormData();
+            // for (var key in data) {
+            //     formData.append(key, data[key]);
+            // }
+            for (var key in data) {
+                if (Array.isArray(data[key])) {
+                    for (var i = 0; i < data[key].length; i++) {
+                        formData.append(key + '[]', data[key][i]);
+                    }
+                } else {
+                    formData.append(key, data[key]);
+                }
+            }
+
+            const endpoint = "/request/create";
+            return $http.post(baseUrl + endpoint, formData, getConfigForm());
+        }
+
+        const getRequestById = (id) => {
+            const endpoint = `/request/Id=${id}`;
+            return $http.get(baseUrl + endpoint, getConfig());
+        }
+
+        const getRequestApprovers = (id) => {
+            const endpoint = `/request/workflow/requestId=${id}`;
+            return $http.get(baseUrl + endpoint, getConfig());
+        }
+
+        const getRequestAttachments = (id) => {
+            const endpoint = `/request/attachment/requestId=${id}`;
+            return $http.get(baseUrl + endpoint, getConfig());
+        }
+
+        const createPdfRequest = (id) => {
+            const endpoint = `/file/pdf-request/${id}`;
+            return $http.get(baseUrl + endpoint, getConfig());
+        }
+
         this.getRequests = getRequests;
+        this.postRequest = postRequest;
+        this.getRequestById = getRequestById;
+        this.getRequestApprovers = getRequestApprovers;
+        this.getRequestAttachments = getRequestAttachments;
+        this.createPdfRequest = createPdfRequest;
     }])
     .service('departmentService', ['$http', function ($http) {
         const getDepartments = () => {

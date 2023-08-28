@@ -4,7 +4,7 @@
       <span style="font-size: 20px;"><b>CAR BOOKING</b></span>
     </div>
     <div class="tool-bar col-9">
-        <button class="btn-export-excel" >Export Excel</button>
+        <button class="btn-export-excel btn btn-success" type="button">Export Excel</button>
         <div class="dropdown">
           <button
             class="btn-filter btn btn-secondary dropdown-toggle"
@@ -12,27 +12,27 @@
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            data-bs-auto-close="false"
+            data-bs-auto-close="outside"
           >
             Filter
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" role="menu">
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" role="menu" >
             <li>
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-5" style="align-self: center;">
                   <span>Filter</span>
                 </div>
-                <div class="col-md-9">
-                  <button class="btn-apply" ng-click="applyFilter()">Apply</button>
-                  <button class="btn-clear" ng-click="clearFilter()">Clear</button>
-                  <button class="btn-close"></button>
+                <div class="filter-header col-md-7">
+                  <button class="btn-apply btn btn-success" ng-click="applyFilter()">Apply</button>
+                  <button class="btn-clear btn btn-secondary" ng-click="clearFilter()">Clear</button>
+                  <!-- <button class="btn-close"></button> -->
                 </div>
               </div>
             </li>
             <li>
               <div>
                   <label><b>Request Code</b></label>
-                  <input placeholder="Key words ..." ng-model="requestCode"/>
+                  <input class="form-control" placeholder="Key words ..." ng-model="requestCode"/>
               </div>
             </li>
             <li>
@@ -44,11 +44,11 @@
                 </div>
                 <div>
                   <span>Start Date</span>
-                  <input type="date" ng-model="startDate" />
+                  <input type="date" ng-model="startDate" style="margin-left: 10px;"/>
                 </div>
-                <div>
+                <div style="margin-top: 10px;">
                   <span>End Date</span>
-                  <input type="date" ng-model="endDate" />
+                  <input type="date" ng-model="endDate" style="margin-left: 16px;"/>
                 </div>
               </div>
             </li>
@@ -77,7 +77,9 @@
           </ul>
 
         </div>
-        <a class="btn-create" href="/request/create">Create new</a>
+        <a href="/request/create">
+          <button type="button" class="btn-create btn btn-success">Create new</button>
+        </a>
       </div>
     </div>
   </div>

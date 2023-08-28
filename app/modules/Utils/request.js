@@ -7,3 +7,13 @@ const getConfig = () => {
         },
     };
 };
+
+const getConfigForm = () => {
+    var token = localStorage.getItem('token');
+    return {
+        headers: {
+            'Content-type': undefined,
+            Authorization: `Bearer ${token}`,
+        },
+    };
+}

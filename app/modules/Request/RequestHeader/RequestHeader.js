@@ -1,5 +1,5 @@
 angular.module('RequestHeader', [])
-    .controller('RequestHeaderController', function ($scope, userService, requestHeaderService) {
+    .controller('RequestHeaderController', function ($scope, userService, requestHeaderService, SidebarService) {
         $scope.toasts = false;
         $scope.message = null;
 
@@ -32,24 +32,6 @@ angular.module('RequestHeader', [])
 
         });
 
-        // $scope.applyDateRange = function () {
-        //     $scope.toasts = false;
-        //     var startDate = new Date($scope.startDate);
-        //     var endDate = new Date($scope.endDate);
-
-        //     if (startDate > endDate) {
-        //         $scope.dateRange = "";
-        //         $scope.toasts = true;
-        //         $scope.message = 'Start Date > End Date';
-        //         return;
-        //     }
-        //     $scope.dateRange = formatDateView(startDate) + ' - ' + formatDateView(endDate);
-        //     console.log($scope.startDate);
-        // };
-
-        const formatDateView = (date) => {
-            return date.toLocaleDateString('en-GB');
-        }
         // ------------ Created --------------------- //
 
 
@@ -88,34 +70,34 @@ angular.module('RequestHeader', [])
         // ------------ Status --------------------- //
 
 
-        const formatDateToSubmit = (date) => {
-            console.log("date: ", date);
-            var newDate = new Date(date)
-            return newDate.toLocaleDateString('en-GB').split('/').reverse().join('-');
-        }
+        // const formatDateToSubmit = (date) => {
+        //     var newDate = new Date(date)
+        //     return newDate.toLocaleDateString('en-GB').split('/').reverse().join('-');
+        // };
 
-        $scope.createdFrom = null;
-        $scope.createTo = null;
+        // $scope.createdFrom = null;
+        // $scope.createTo = null;
 
         $scope.applyFilter = () => {
-            $scope.createdFrom = $scope.startDate === null ? "" : formatDateToSubmit($scope.startDate);
-            $scope.createdTo = $scope.endDate === null ? "" : formatDateToSubmit($scope.endDate);
+            var createdFrom = $scope.startDate === null ? "" : formatDateToSubmit($scope.startDate);
+            var createdTo = $scope.endDate === null ? "" : formatDateToSubmit($scope.endDate);
             var filterData = {
                 requestCode: $scope.requestCode,
-                createdFrom: $scope.createdFrom,
-                createdTo: $scope.createdTo,
+                createdFrom: createdFrom,
+                createdTo: createdTo,
                 senderId: $scope.selectedCreatedBy ? $scope.selectedCreatedBy.Id : "",
                 status: $scope.selectedStatus ? $scope.selectedStatus : ""
             };
             requestHeaderService.setFilterRequest(filterData);
-            // console.log("filter: ", $scope.requestCode);
-            // console.log("filter: ", $scope.createdFrom);
-            // console.log("filter: ", $scope.createdTo);
-            // console.log("filter: ", $scope.selectedCreatedBy ? $scope.selectedCreatedBy.Id : null);
-            // console.log("filter: ", $scope.selectedStatus);
-        }
+        };
 
         $scope.clearFilter = () => {
+            $scope.requestCode = "";
+            $scope.startDate = null;
+            $scope.endDate = null;
+            $scope.dateRange = '';
+            $scope.selectedCreatedBy = null;
+            $scope.selectedStatus = null;
             var filterData = {
                 requestCode: "",
                 createdFrom: "",
@@ -123,8 +105,30 @@ angular.module('RequestHeader', [])
                 senderId: "",
                 status: ""
             }
+            SidebarService.setTab("get-all");
+            SidebarService.setStatus("");
             requestHeaderService.setFilterRequest(filterData);
-        }
+        };
+
+        $scope.$watch(() => {
+            return requestHeaderService.getFilterRequest();
+        }, (newFilter, oldFilter) => {
+            if (newFilter !== oldFilter) {
+                if (newFilter.requestCode === "" && newFilter.createdFrom === ""
+                    && newFilter.createdTo === "" && newFilter.senderId === "") {
+                    $scope.requestCode = "";
+                    $scope.startDate = null;
+                    $scope.endDate = null;
+                    $scope.dateRange = '';
+                    $scope.selectedCreatedBy = null;
+                    $scope.selectedStatus = newFilter.status === "" ? null : newFilter.status;
+                }
+            }
+        })
+
+        // $scope.$watch('selectedCreatedBy', function (newValue, oldValue) {
+        //     console.log(newValue);
+        // })
 
 
     })

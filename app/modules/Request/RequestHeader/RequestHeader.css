@@ -15,19 +15,28 @@
   margin-right: 10px;
   font-size: 14px;
   border: solid 0.5px;
-  background: white;
 }
 
 .request-header-row .tool-bar .btn-filter {
+  font-size: 14px;
   margin-right: 10px;
   background-color: white;
   color: black;
+}
+
+.request-header-row .tool-bar .btn-create {
+  font-size: 14px;
 }
 
 .request-header-row .tool-bar .dropdown .dropdown-menu {
   width: 300px;
   max-height: 80vh;
   padding: 15px;
+}
+
+.request-header-row .filter-header .btn {
+  font-size: 14px;
+  margin-left: 10px;
 }
 
 /* .dropdown-menu.show {

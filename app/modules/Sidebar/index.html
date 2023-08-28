@@ -44,30 +44,42 @@
         </button>
         <div class="collapse show" id="home-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li>
+            <li
+              ng-class="clicked === 'get-all' ? 'li-clicked' : ''"
+              ng-click="clickRequestTab('get-all')"
+            >
               <a
-                href="#"
+                href=""
                 class="link-dark d-inline-flex text-decoration-none rounded"
                 >All requests</a
               >
             </li>
-            <li>
+            <li
+              ng-class="clicked === 'sent-to-me' ? 'li-clicked' : ''"
+              ng-click="clickRequestTab('sent-to-me')"
+            >
               <a
-                href="#"
+                href=""
                 class="link-dark d-inline-flex text-decoration-none rounded"
                 >Sent to me</a
               >
             </li>
-            <li>
+            <li
+              ng-class="clicked === 'sent-to-others' ? 'li-clicked' : ''"
+              ng-click="clickRequestTab('sent-to-others')"
+            >
               <a
-                href="#"
+                href=""
                 class="link-dark d-inline-flex text-decoration-none rounded"
                 >Sent to others</a
               >
             </li>
-            <li>
+            <li
+              ng-class="clicked === 'shared-with-me' ? 'li-clicked' : ''"
+              ng-click="clickRequestTab('shared-with-me')"
+            >
               <a
-                href="#"
+                href=""
                 class="link-dark d-inline-flex text-decoration-none rounded"
                 >Shared with me</a
               >
@@ -90,32 +102,54 @@
         </button>
         <div class="collapse" id="dashboard-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li>
+            <li
+              ng-class="clicked === 'Draft' ? 'li-clicked' : ''"
+              ng-click="clickStatusTab('Draft')"
+            >
               <a
-                href="#"
+                href=""
                 class="link-dark d-inline-flex text-decoration-none rounded"
-                >Overview</a
+                >Draft</a
               >
             </li>
-            <li>
+            <li
+              ng-class="clicked === 'Waiting for approval' ? 'li-clicked' : ''"
+              ng-click="clickStatusTab('Waiting for approval')"
+            >
               <a
-                href="#"
+                href=""
                 class="link-dark d-inline-flex text-decoration-none rounded"
-                >Weekly</a
+                >Approving
+              </a>
+            </li>
+            <li
+              ng-class="clicked === 'Approved' ? 'li-clicked' : ''"
+              ng-click="clickStatusTab('Approved')"
+            >
+              <a
+                href=""
+                class="link-dark d-inline-flex text-decoration-none rounded"
+                >Approved</a
               >
             </li>
-            <li>
+            <li
+              ng-class="clicked === 'Rejected' ? 'li-clicked' : ''"
+              ng-click="clickStatusTab('Rejected')"
+            >
               <a
-                href="#"
+                href=""
                 class="link-dark d-inline-flex text-decoration-none rounded"
-                >Monthly</a
+                >Rejected</a
               >
             </li>
-            <li>
+            <li
+              ng-class="clicked === 'Done' ? 'li-clicked' : ''"
+              ng-click="clickStatusTab('Done')"
+            >
               <a
-                href="#"
+                href=""
                 class="link-dark d-inline-flex text-decoration-none rounded"
-                >Annually</a
+                >Done</a
               >
             </li>
           </ul>
@@ -134,7 +168,7 @@
           />
           <span>Reports</span>
         </button>
-        <div class="collapse" id="orders-collapse">
+        <!-- <div class="collapse" id="orders-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li>
               <a
@@ -165,7 +199,7 @@
               >
             </li>
           </ul>
-        </div>
+        </div> -->
       </li>
       <li class="border-top my-3"></li>
       <!-- <li class="mb-1">
