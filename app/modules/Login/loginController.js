@@ -17,7 +17,8 @@ angular.module('Login', ['ngRoute', 'LoginServices'])
                             isLogin: true,
                             userInfo: {
                                 FullName: res.data.Data.userInfo.FullName,
-                                id: res.data.Data.userInfo.Id
+                                id: res.data.Data.userInfo.Id,
+                                avatarPath: res.data.Data.userInfo.AvatarPath
                             }
                         });
                         $location.path('/home');
@@ -40,7 +41,8 @@ angular.module('Login', ['ngRoute', 'LoginServices'])
                                 isLogin: false,
                                 userInfo: {
                                     FullName: "",
-                                    id: ""
+                                    id: "",
+                                    avatarPath: ""
                                 }
                             });
                         });

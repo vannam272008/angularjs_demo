@@ -1,3 +1,8 @@
-<div >
+<div ng-controller="HeaderController">
+  <div ng-hide="userLogin.isLogin">
+    <div ng-include="'modules/Spinners/index.html'"></div>
+  </div>
+  <div ng-show="userLogin.isLogin">
     <p>Home Page</p>
+  </div>
 </div>

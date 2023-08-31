@@ -1,6 +1,6 @@
 const formatDateToSubmit = (date) => {
     var newDate = new Date(date)
-    return newDate.toLocaleDateString('en-GB').split('/').reverse().join('-');
+    return newDate.toISOString();
 };
 
 const formatDateView = (date) => {

@@ -9,51 +9,52 @@
 
     <div id="content" class="list-content">
       <div ng-include="'modules/Request/RequestHeader/index.html'"></div>
-      <div class="list-content-body">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th style="width: 200px">Request Code</th>
-              <th style="width: 200px">Department</th>
-              <th style="width: 200px">Created by</th>
-              <th style="width: 200px">User</th>
-              <th style="width: 200px">Created date</th>
-              <th style="width: 200px">From</th>
-              <th style="width: 200px">To</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              ng-repeat="request in requestList"
-              ng-dblclick="doubleClickDetail(request.Id)"
-            >
-              <td style="width: 200px">{{request.RequestCode}}</td>
-              <td style="width: 200px">{{request.Department.Name}}</td>
-              <td style="width: 200px">{{request.SenderUser.FullName}}</td>
-              <td style="width: 200px">{{request.ReceiveUser.FullName}}</td>
-              <td style="width: 200px" class="td-created">
-                <span
-                  class="status-tooltip"
-                  ng-class="classStatus(request.Status)"
-                >
-                  <span class="tooltip-created"> {{request.Status}} </span>
-                  {{request.Created | date:'dd/MM/yyyy'}}
-                </span>
-              </td>
-              <td style="width: 200px">
-                {{request.UsageFrom | date:'dd/MM/yyyy'}}
-              </td>
-              <td style="width: 200px">
-                {{request.UsageTo | date:'dd/MM/yyyy'}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="list-content-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th style="width: 200px">Request Code</th>
+                <th style="width: 200px">Department</th>
+                <th style="width: 200px">Created by</th>
+                <th style="width: 200px">User</th>
+                <th style="width: 200px">Created date</th>
+                <th style="width: 200px">From</th>
+                <th style="width: 200px">To</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                ng-repeat="request in requestList"
+                ng-dblclick="doubleClickDetail(request.Id)"
+              >
+                <td style="width: 200px">{{request.RequestCode}}</td>
+                <td style="width: 200px">{{request.Department.Name}}</td>
+                <td style="width: 200px">{{request.SenderUser.FullName}}</td>
+                <td style="width: 200px">{{request.ReceiveUser.FullName}}</td>
+                <td style="width: 200px" class="td-created">
+                  <span
+                    class="status-tooltip"
+                    ng-class="classStatus(request.Status)"
+                  >
+                    <span class="tooltip-created"> {{request.Status}} </span>
+                    {{request.Created | date:'dd/MM/yyyy'}}
+                  </span>
+                </td>
+                <td style="width: 200px">
+                  {{request.UsageFrom | date:'dd/MM/yyyy'}}
+                </td>
+                <td style="width: 200px">
+                  {{request.UsageTo | date:'dd/MM/yyyy'}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          ng-include="'modules/Pagination/index.html'"
+          style="padding-top: 25px"
+        ></div>
       </div>
-      <div
-        ng-include="'modules/Pagination/index.html'"
-        style="padding-top: 25px"
-      ></div>
     </div>
   </div>
 </div>

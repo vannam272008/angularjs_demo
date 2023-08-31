@@ -4,7 +4,7 @@
       <span style="font-size: 20px;"><b>CAR BOOKING</b></span>
     </div>
     <div class="tool-bar col-9">
-        <button class="btn-export-excel btn btn-success" type="button">Export Excel</button>
+        <button class="btn-export-excel btn btn-success" type="button" ng-click="exportExcel()">Export Excel</button>
         <div class="dropdown">
           <button
             class="btn-filter btn btn-secondary dropdown-toggle"
@@ -38,17 +38,26 @@
             <li>
               <div>
                 <label><b>Created</b></label>
-                <p>Result: {{dateRange}}</p>
+                <div style="min-height: 54px;">
+                  <span>Result:</span>
+                  <div>
+                    <span>{{dateRange}}</span>
+                    <span class="input-group form-group" ng-if="toasts" style="color: red">
+                      {{message}}
+                    </span>
+                  </div>
+                </div>
+<!--                 
                 <div class="input-group form-group" ng-if="toasts" style="color: red">
                   {{message}}
-                </div>
+                </div> -->
                 <div>
                   <span>Start Date</span>
-                  <input type="date" ng-model="startDate" style="margin-left: 10px;"/>
+                  <input class="form-control" type="date" ng-model="startDate"/>
                 </div>
                 <div style="margin-top: 10px;">
                   <span>End Date</span>
-                  <input type="date" ng-model="endDate" style="margin-left: 16px;"/>
+                  <input class="form-control" type="date" ng-model="endDate"/>
                 </div>
               </div>
             </li>

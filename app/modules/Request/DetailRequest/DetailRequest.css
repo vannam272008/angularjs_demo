@@ -30,6 +30,7 @@
   flex-wrap: wrap;
   position: fixed;
   width: 100%;
+  z-index: 1000;
 }
 
 .detail-request-body .row {
@@ -159,6 +160,53 @@
 .form-check-input:disabled ~ .form-check-label {
   color: unset;
   opacity: 1;
+}
+
+.share-modal .list-share-user-dropdown .selected-option {
+  cursor: pointer;
+  padding: 3px 10px;
+  display: inline-flex;
+  width: 100%;
+  border: solid 1px slategrey;
+  border-radius: 5px;
+  min-height: 55px;
+}
+
+.share-modal .list-share-user-dropdown .selected-option .span-svg-select {
+  margin-top: 12px;
+  right: 25px;
+  position: absolute;
+}
+
+.share-modal .list-share-user-dropdown .dropdown-options {
+  cursor: pointer;
+  display: contents;
+  position: absolute;
+  z-index: 1001;
+  margin-top: 5px;
+  border: solid 2px #ced4da;
+  border-top: unset;
+  color: #212529;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.share-modal .list-share-user-dropdown .dropdown-options .option {
+  font-weight: normal;
+  display: block;
+  white-space-collapse: collapse;
+  text-wrap: nowrap;
+  min-height: 1.2em;
+  padding: 0px 10px 1px;
+}
+
+.share-modal .list-share-user-dropdown .dropdown-options .active {
+  background-color: royalblue;
+  color: white;
+}
+
+.share-modal .list-share-user-dropdown .dropdown-options .option:hover {
+  background-color: slategrey;
 }
 /* 
   .detail-request-body .send-to-approvers li::marker {

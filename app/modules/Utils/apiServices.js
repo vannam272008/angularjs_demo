@@ -50,9 +50,10 @@ angular.module('apiServices', [])
             //     formData.append(key, data[key]);
             // }
             for (var key in data) {
+                console.log("post: ", key, "data key: ", data[key]);
                 if (Array.isArray(data[key])) {
                     for (var i = 0; i < data[key].length; i++) {
-                        formData.append(key + '[]', data[key][i]);
+                        formData.append(key, data[key][i]);
                     }
                 } else {
                     formData.append(key, data[key]);
@@ -61,27 +62,78 @@ angular.module('apiServices', [])
 
             const endpoint = "/request/create";
             return $http.post(baseUrl + endpoint, formData, getConfigForm());
-        }
+        };
 
         const getRequestById = (id) => {
             const endpoint = `/request/Id=${id}`;
             return $http.get(baseUrl + endpoint, getConfig());
+        };
+
+        const deleteRequest = (id) => {
+            const endpoint = `/request/${id}`;
+            return $http.delete(baseUrl + endpoint, getConfig());
+        };
+
+        const actionRequest = (id, data) => {
+            var formData = new FormData();
+            for (var key in data) {
+                formData.append(key, data[key]);
+            };
+
+            const endpoint = `/request/action/Id=${id}`;
+            return $http.put(baseUrl + endpoint, formData, getConfigForm());
+        }
+
+        const actionCancelRequest = (id, data) => {
+            var formData = new FormData();
+            for (var key in data) {
+                formData.append(key, data[key]);
+            };
+
+            const endpoint = `/request/action/cancel/Id=${id}`;
+
+            return $http.put(baseUrl + endpoint, formData, getConfigForm());
         }
 
         const getRequestApprovers = (id) => {
             const endpoint = `/request/workflow/requestId=${id}`;
             return $http.get(baseUrl + endpoint, getConfig());
-        }
+        };
 
         const getRequestAttachments = (id) => {
             const endpoint = `/request/attachment/requestId=${id}`;
             return $http.get(baseUrl + endpoint, getConfig());
-        }
+        };
 
         const createPdfRequest = (id) => {
             const endpoint = `/file/pdf-request/${id}`;
             return $http.get(baseUrl + endpoint, getConfig());
+        };
+
+        const getAllRequestComments = (id) => {
+            const endpoint = `/request/comment/requestId=${id}`;
+            return $http.get(baseUrl + endpoint, getConfig());
         }
+
+        const createNewRequestComment = (id, data) => {
+            const endpoint = `/request/comment/requestId=${id}`;
+            var formData = new FormData();
+            for (var key in data) {
+                formData.append(key, data[key]);
+            };
+
+            return $http.post(baseUrl + endpoint, formData, getConfigForm());
+        }
+
+        const shareRequest = (id, userId) => {
+            const endpoint = "/request/share/create";
+            var requestShare = {
+                RequestId: id,
+                UserId: userId
+            }
+            return $http.post(baseUrl + endpoint, requestShare, getConfig());
+        }
+
 
         this.getRequests = getRequests;
         this.postRequest = postRequest;
@@ -89,6 +141,12 @@ angular.module('apiServices', [])
         this.getRequestApprovers = getRequestApprovers;
         this.getRequestAttachments = getRequestAttachments;
         this.createPdfRequest = createPdfRequest;
+        this.deleteRequest = deleteRequest;
+        this.actionRequest = actionRequest;
+        this.actionCancelRequest = actionCancelRequest;
+        this.getAllRequestComments = getAllRequestComments;
+        this.createNewRequestComment = createNewRequestComment;
+        this.shareRequest = shareRequest;
     }])
     .service('departmentService', ['$http', function ($http) {
         const getDepartments = () => {

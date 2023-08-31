@@ -21,20 +21,26 @@ angular.module('Header', ['ngRoute', 'apiServices'])
         $scope.token = localStorage.getItem('token');
 
         if ($scope.token !== null && $scope.userLogin.isLogin === false) {
-            userService.getUserProfile().then((res) => {
-                if (res.data.Success) {
-                    userLoginService.setUser({
-                        isLogin: true,
-                        userInfo: {
-                            FullName: res.data.Data.FirstName + ' ' + res.data.Data.LastName,
-                            id: res.data.Data.Id
-                        }
-                    });
-                } else {
-                    $location.path('/login');
-                }
-
-            })
+            userService.getUserProfile()
+                .then((res) => {
+                    if (res.data.Success) {
+                        userLoginService.setUser({
+                            isLogin: true,
+                            userInfo: {
+                                FullName: res.data.Data.FirstName + ' ' + res.data.Data.LastName,
+                                id: res.data.Data.Id,
+                                avatarPath: res.data.Data.AvatarPath
+                            }
+                        });
+                    } else {
+                        $location.path('/login');
+                    }
+                })
+                .catch((e) => {
+                    if (e.status === 401) {
+                        $location.path('/login');
+                    }
+                })
         }
         // -----------------------------------------------------------------//
 

@@ -13,6 +13,7 @@
       <div ng-show="toasts">
         <div
           class="toast show position-fixed top-0 end-0 p-3"
+          style="z-index: 9999"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"
@@ -35,11 +36,15 @@
         <a href="/request" style="cursor: pointer">
           <button type="button" class="btn btn-secondary">Return</button>
         </a>
-        <button type="button" class="btn btn-warning" ng-click="saveDraft()">
+        <button
+          type="button"
+          class="btn btn-warning"
+          ng-click="submitRequest('Draft')"
+        >
           Save Draft
         </button>
         <button
-          ng-click="submitRequest()"
+          ng-click="submitRequest('Submit')"
           type="button"
           class="btn btn-success"
         >
@@ -77,7 +82,7 @@
             <div
               class="list-user-dropdown"
               custom-user-dropdown
-              ng-model="selectedUser"
+              ng-model="selectedShareUser"
               options="userList"
             ></div>
           </div>
@@ -201,17 +206,45 @@
         <!------------------- Attachments ---------------------------------->
         <div class="create-request-attachment">
           <span><b>Attachment(s)</b></span>
-
           <div>
-            <button
-              for="upload-file-attachment"
-              type="button"
-              class="btn btn-secondary"
-            >
+            <label class="btn btn-secondary">
               <span>Add attachments</span>
-              <input id="upload-file-attachment" type="file" multiple hidden />
-            </button>
+              <input
+                id="upload-file-attachment"
+                type="file"
+                multiple
+                style="display: none"
+                onchange="angular.element(this).scope().uploadFiles(this.files)"
+              />
+            </label>
             <span>(Maximum 20MB per file)</span>
+          </div>
+          <div ng-show="files.length > 0">
+            <div
+              class="file-uploaded"
+              ng-repeat="fileSelected in files track by $index"
+              style="margin-top: 5px"
+            >
+              <span>{{fileSelected.name}}</span>
+              <a
+                class="btn-delete-file-uploaded btn-svg"
+                ng-click="deleteFileUploaded($index)"
+              >
+                <svg
+                  style="color: red"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  fill="currentColor"
+                  class="bi bi-trash-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
         <!------------------- Attachments ---------------------------------->
@@ -222,18 +255,74 @@
           <div class="row">
             <div
               class="col-md-4 col-approver"
-              ng-repeat="index in getRange(0, totalApprovers)"
+              ng-repeat="approver_index in getRange(0, totalApprovers)"
             >
               <div>
-                <span><b>Approver {{index + 1}}</b></span>
-                <button ng-click="deleteApprover(index)">delete</button>
-                <button>edit</button>
-                <button>move</button>
+                <span>
+                  <b>
+                    {{selectedApproverUserList[approver_index].Position ===
+                    "Manager" ||
+                    selectedApproverUserList[approver_index].Position ===
+                    "Supervisor" ?
+                    selectedApproverUserList[approver_index].Position :
+                    'Approver ' + (approver_index + 1) }}
+                  </b>
+                </span>
+                <a class="btn-svg" ng-click="deleteApprover(approver_index)">
+                  <svg
+                    style="color: red"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    fill="currentColor"
+                    class="bi bi-trash-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                    />
+                  </svg>
+                </a>
+                <a class="btn-svg">
+                  <svg
+                    style="color: blue"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    fill="currentColor"
+                    class="bi bi-pencil-square"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                    />
+                  </svg>
+                </a>
+                <a class="btn-svg">
+                  <svg
+                    style="color: black"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    fill="currentColor"
+                    class="bi bi-arrows-move"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"
+                    />
+                  </svg>
+                </a>
               </div>
               <div
                 class="list-user-dropdown"
                 custom-user-dropdown
-                ng-model="selectedApproverUserList[index]"
+                ng-model="selectedApproverUserList[approver_index]"
                 options="approverUserList"
               ></div>
             </div>
@@ -255,7 +344,7 @@
                 <option value="3">Three</option>
               </select>
             </div> -->
-            <div class="col-md-4" style="align-self: center">
+            <div class="col-md-4 btn-add-approver">
               <button
                 ng-click="addApprover()"
                 type="button"

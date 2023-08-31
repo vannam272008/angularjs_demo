@@ -112,6 +112,7 @@
   width: 100%;
   border-bottom: solid 2px slategrey;
   padding-bottom: 5px;
+  min-height: 55px;
 }
 
 .create-request-body .list-user-dropdown .dropdown-options {
@@ -153,12 +154,43 @@
   position: absolute;
 }
 
-.send-to-approvers button {
+.create-request-body .btn-svg svg {
+  margin-left: 10px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+.create-request-body .file-uploaded {
+  display: list-item;
+  width: 300px;
+}
+
+.create-request-body .file-uploaded span {
+  float: left;
+}
+
+.create-request-body .file-uploaded a {
+  float: right;
+  position: relative;
+  right: 0;
+}
+
+.send-to-approvers .btn {
   font-size: 14px;
 }
 
-.create-request-attachment button {
+.create-request-attachment .btn {
   font-size: 14px;
+}
+
+.btn-delete-file-uploaded {
+  cursor: pointer;
+}
+
+.send-to-approvers .btn-add-approver {
+  padding-top: 20px;
+  max-height: 76px;
+  min-height: 76px;
 }
 /* 
 .create-request-body .send-to-approvers li::marker {

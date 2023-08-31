@@ -66,12 +66,15 @@ angular.module('CreateRequest', ['ngRoute'])
                         .then((res) => {
                             $scope.approverUserList = res.data.Data;
                             $scope.approverUserListView = $scope.approverUserList;
+                            $scope.selectedApproverUserList = $scope.approverUserList.filter((approver) => approver.Position === "Manager" || approver.Position === "Supervisor");
+                            $scope.totalApprovers = $scope.selectedApproverUserList.length;
+
                         });
                 };
 
-                $scope.changeSelectedApproverUser = (index) => {
-                    console.log("hi", index);
-                }
+                // $scope.changeSelectedApproverUser = (index) => {
+                //     console.log("hi", index);
+                // }
 
 
 
@@ -84,37 +87,78 @@ angular.module('CreateRequest', ['ngRoute'])
 
                 $scope.$watchCollection('selectedApproverUserList', (newSelected, oldSelected) => {
                     if (newSelected !== oldSelected) {
-                        console.log("hi");
-                        newSelected.map((selected) => {
-                            console.log("selected", selected);
-                            $scope.approverUserList = $scope.approverUserList.filter((user) => user.Id !== selected.Id);
-                            console.log("list: ", $scope.approverUserList);
-                        });
-                    }
+                        if ($scope.approverUserList.length > 0) {
+                            newSelected.map((selected) => {
+                                $scope.approverUserList = $scope.approverUserList.filter((user) => user.Id !== selected.Id);
+                            });
+                        }
+
+                    };
                 })
 
                 // ------------ Department + User --------------------- //
 
                 // ------------ Input --------------------- //
 
+                // function getCurrentFormattedDateTime() {
+                //     const currentDate = new Date();
+                //     const options = {
+                //         year: 'numeric',
+                //         month: '2-digit',
+                //         day: '2-digit',
+                //         hour: '2-digit',
+                //         minute: '2-digit',
+                //         hour12: true
+                //     };
+                //     return currentDate.toLocaleString('en-GB', options);
+                // }
+
                 $scope.mobile = "";
                 $scope.costCenter = "";
                 $scope.totalPassengers = "";
                 $scope.usageTimeFrom = new Date();
+                // $scope.usageTimeFrom = $scope.usageTimeFrom;
                 $scope.usageTimeTo = new Date();
+                // $scope.usageTimeTo = $scope.usageTimeTo.toISOString().substring(0, 16);
                 $scope.pickTime = new Date();
                 $scope.pickLocation = "";
                 $scope.destination = "";
                 $scope.reason = "";
                 $scope.applyNote = "false";
-                $scope.files = [];
+
 
 
                 // ------------ Input --------------------- //
 
+                // ------------ Files --------------------- //
+                $scope.files = [];
+                // $scope.selectedFile = null;
+
+                // $scope.openFileInput = () => {
+                //     document.getElementById('upload-file-attachment').click();
+                // };
+
+                $scope.uploadFiles = (files) => {
+                    for (var i = 0; i < files.length; i++) {
+                        $scope.files.push(files[i]);
+                    }
+                    console.log($scope.files);
+                    $scope.$apply();
+                }
+
+                $scope.deleteFileUploaded = (index) => {
+                    $scope.files.splice(index, 1);
+                }
+
+                // $scope.$watch('selectedFile', (newSelected, oldSelected) => {
+                //     console.log(newSelected);
+                // });
+
+                // ------------ Files --------------------- //
+
 
                 // ------------ Submit Request --------------------- //
-                $scope.submitRequest = () => {
+                $scope.submitRequest = (type) => {
                     var requestData = {
                         SenderId: $scope.userLogin.userInfo.id,
                         DepartmentId: $scope.selectedDepartment.Id,
@@ -131,8 +175,13 @@ angular.module('CreateRequest', ['ngRoute'])
                         PickTime: formatDateToSubmit($scope.pickTime),
                         ListOfUserId: $scope.selectedApproverUserList.map((user) => user.Id),
                         Status: "",
-                        files: ""
+                        files: $scope.files
                     };
+
+                    if (type === "Draft") {
+                        requestData.Status = "Draft";
+                    };
+
                     if (requestData.ReceiverId !== null && requestData.Mobile !== "" && requestData.CostCenter !== "" && requestData.totalPassengers !== ""
                         && requestData.pickLocation !== "" && requestData.Destination !== "" && requestData.Reason !== ""
                     ) {
@@ -153,47 +202,48 @@ angular.module('CreateRequest', ['ngRoute'])
                         }, 3000);
                     };
                 };
+                // ------------ Submit Request --------------------- //
 
 
-                $scope.saveDraft = () => {
-                    var requestData = {
-                        SenderId: $scope.userLogin.userInfo.id,
-                        DepartmentId: $scope.selectedDepartment.Id,
-                        ReceiverId: $scope.selectedUser.User.Id,
-                        Mobile: $scope.mobile,
-                        CostCenter: $scope.costCenter,
-                        TotalPassengers: $scope.totalPassengers,
-                        PickLocation: $scope.pickLocation,
-                        Destination: $scope.destination,
-                        Reason: $scope.reason,
-                        ApplyNote: $scope.applyNote,
-                        UsageFrom: formatDateToSubmit($scope.usageTimeFrom),
-                        UsageTo: formatDateToSubmit($scope.usageTimeTo),
-                        PickTime: formatDateToSubmit($scope.pickTime),
-                        ListOfUserId: $scope.selectedApproverUserList.map((user) => user.Id),
-                        Status: "Draft",
-                        files: ""
-                    };
-                    if (requestData.ReceiverId !== null && requestData.Mobile !== "" && requestData.CostCenter !== "" && requestData.totalPassengers !== ""
-                        && requestData.pickLocation !== "" && requestData.Destination !== "" && requestData.Reason !== ""
-                    ) {
-                        requestService.postRequest(requestData)
-                            .then((res) => {
-                                console.log(res);
-                            })
-                            .finally(() => {
-                                $location.path('/request');
-                            })
-                            .catch((e) => {
-                                console.log(e);
-                            });
-                    } else {
-                        $scope.toasts = true;
-                        $timeout(() => {
-                            $scope.toasts = false;
-                        }, 3000);
-                    };
-                };
+                // $scope.saveDraft = () => {
+                //     var requestData = {
+                //         SenderId: $scope.userLogin.userInfo.id,
+                //         DepartmentId: $scope.selectedDepartment.Id,
+                //         ReceiverId: $scope.selectedUser.User.Id,
+                //         Mobile: $scope.mobile,
+                //         CostCenter: $scope.costCenter,
+                //         TotalPassengers: $scope.totalPassengers,
+                //         PickLocation: $scope.pickLocation,
+                //         Destination: $scope.destination,
+                //         Reason: $scope.reason,
+                //         ApplyNote: $scope.applyNote,
+                //         UsageFrom: formatDateToSubmit($scope.usageTimeFrom),
+                //         UsageTo: formatDateToSubmit($scope.usageTimeTo),
+                //         PickTime: formatDateToSubmit($scope.pickTime),
+                //         ListOfUserId: $scope.selectedApproverUserList.map((user) => user.Id),
+                //         Status: "Draft",
+                //         files: $scope.files
+                //     };
+                //     if (requestData.ReceiverId !== null && requestData.Mobile !== "" && requestData.CostCenter !== "" && requestData.totalPassengers !== ""
+                //         && requestData.pickLocation !== "" && requestData.Destination !== "" && requestData.Reason !== ""
+                //     ) {
+                //         requestService.postRequest(requestData)
+                //             .then((res) => {
+                //                 console.log(res);
+                //             })
+                //             .finally(() => {
+                //                 $location.path('/request');
+                //             })
+                //             .catch((e) => {
+                //                 console.log(e);
+                //             });
+                //     } else {
+                //         $scope.toasts = true;
+                //         $timeout(() => {
+                //             $scope.toasts = false;
+                //         }, 3000);
+                //     };
+                // };
 
 
 
@@ -265,3 +315,32 @@ angular.module('CreateRequest', ['ngRoute'])
             }
         };
     });
+    // .directive('dateTimeFormat', function () {
+    //     return {
+    //         require: 'ngModel',
+    //         link: function (scope, element, attrs, ngModelCtrl) {
+    //             ngModelCtrl.$formatters.push(function (value) {
+    //                 if (!value) return value;
+
+    //                 // Convert input value to Date object
+    //                 const dateTime = new Date(value);
+
+    //                 // Format date
+    //                 const formattedDate = `${dateTime.getDate().toString().padStart(2, '0')}/${(dateTime.getMonth() + 1).toString().padStart(2, '0')
+    //                     }/${dateTime.getFullYear()}`;
+
+    //                 // Format time with AM/PM
+    //                 let hours = dateTime.getHours();
+    //                 const minutes = dateTime.getMinutes();
+    //                 const amPm = hours >= 12 ? 'PM' : 'AM';
+    //                 hours = hours % 12 || 12;
+    //                 const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${amPm}`;
+
+    //                 // Combine formatted date and time
+    //                 const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+    //                 return formattedDateTime;
+    //             });
+    //         }
+    //     };
+    // });

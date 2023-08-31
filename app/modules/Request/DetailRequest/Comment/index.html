@@ -1,0 +1,115 @@
+<link
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="/modules/Request/DetailRequest/Comment/Comment.css"
+/>
+<section class="content-item" id="comments" ng-controller="CommentController">
+  <div>
+    <div class="row">
+      <div class="col-sm-8">
+        <form>
+          <h3 class="pull-left">Comments</h3>
+          <button
+            type="submit"
+            class="btn btn-info pull-right"
+            ng-click="submitComment()"
+          >
+            Submit
+          </button>
+          <fieldset>
+            <div class="row">
+              <div class="col-sm-2 col-lg-1 hidden-xs">
+                <img
+                  class="img-responsive"
+                  ng-src="{{'http://localhost:63642/' + userLogin.userInfo.avatarPath}}"
+                  alt=""
+                />
+              </div>
+              <div class="form-group col-xs-12 col-sm-10 col-lg-11">
+                <textarea
+                  class="form-control"
+                  id="message"
+                  placeholder="Your message"
+                  required=""
+                  ng-model="newComment.comment"
+                  ng-keypress="handleEnter($event)"
+                ></textarea>
+              </div>
+              <div class="create-comment-attachment">
+                <div>
+                  <label class="btn btn-secondary btn-comment-attachment">
+                    <span>Add attachments</span>
+                    <input
+                      id="upload-file-attachment"
+                      type="file"
+                      multiple
+                      style="display: none"
+                    />
+                  </label>
+                  <span>(Maximum 20MB per file)</span>
+                </div>
+                <!-- <div ng-show="files.length > 0">
+                  <div
+                    class="file-uploaded"
+                    ng-repeat="fileSelected in files track by $index"
+                    style="margin-top: 5px"
+                  >
+                    <span>{{fileSelected.name}}</span>
+                    <a
+                      class="btn-delete-file-uploaded btn-svg"
+                      ng-click="deleteFileUploaded($index)"
+                    >
+                      <svg
+                        style="color: red"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        fill="currentColor"
+                        class="bi bi-trash-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </fieldset>
+        </form>
+
+        <h3>{{commentList.length}} Comments</h3>
+
+        <!-- COMMENT - START -->
+        <div class="media" ng-repeat="comment in commentList">
+          <a class="pull-left" href="#"
+            ><img
+              class="img-responsive"
+              ng-src="{{'http://localhost:63642/' + comment.Account.AvatarPath}}"
+              alt=""
+          /></a>
+          <div class="media-body">
+            <h4 class="media-heading"><b>{{comment.Account.FullName}}</b></h4>
+            <p>{{comment.Content}}</p>
+            <ul class="list-unstyled list-inline media-detail pull-left">
+              <li>
+                <i class="fa fa-calendar"></i>{{formatDate(comment.Created)}}
+              </li>
+              <li><i class="fa fa-thumbs-up"></i>1M</li>
+            </ul>
+            <ul class="list-unstyled list-inline media-detail pull-right">
+              <li class=""><a href="">Like</a></li>
+              <li class=""><a href="">Reply</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- COMMENT - END -->
+      </div>
+    </div>
+  </div>
+</section>

@@ -10,14 +10,16 @@
       ></div>
     </div>
     <div class="detail-request-content">
+      <!------------------- Toast ---------------------------------->
       <div ng-show="toasts">
         <div
           class="toast show position-fixed top-0 end-0 p-3"
+          style="z-index: 9999"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"
         >
-          <div class="toast-header" style="color: red">
+          <div class="toast-header" ng-style="styleToast">
             <strong class="me-auto">Message</strong>
             <small class="text-muted">now</small>
             <button
@@ -27,9 +29,11 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="toast-body">Please complete all information</div>
+          <div class="toast-body">{{message}}</div>
         </div>
       </div>
+      <!------------------- Toast ---------------------------------->
+
       <!------------------- Menu ---------------------------------->
       <div class="detail-request-header">
         <a href="/request" style="cursor: pointer">
@@ -42,15 +46,196 @@
         >
           Download file
         </button>
-        <button type="button" class="btn btn-danger">Delete</button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteModal"
+        >
+          Delete
+        </button>
         <button type="button" class="btn btn-info">Progress</button>
-        <button type="button" class="btn btn-info">Share</button>
-        <button type="button" class="btn btn-success">Approve</button>
-        <button type="button" class="btn btn-danger">Reject</button>
+        <button
+          type="button"
+          class="btn btn-info"
+          data-bs-toggle="modal"
+          data-bs-target="#sharedModal"
+        >
+          Share
+        </button>
+        <button
+          ng-show="detailRequest.Status === 'Waiting for approval'"
+          type="button"
+          class="btn btn-success"
+          data-bs-toggle="modal"
+          data-bs-target="#actionRequestModal"
+          ng-click="selectTypeModal('Approved')"
+        >
+          Approve
+        </button>
+        <button
+          ng-show="detailRequest.Status === 'Waiting for approval'"
+          type="button"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#actionRequestModal"
+          ng-click="selectTypeModal('Rejected')"
+        >
+          Reject
+        </button>
         <button type="button" class="btn btn-info">Forward</button>
-        <button type="button" class="btn btn-warning">Cancel</button>
+        <button
+          ng-show="detailRequest.Status === 'Approved'"
+          type="button"
+          class="btn btn-warning"
+          ng-click="actionCancelRequest()"
+        >
+          Cancel
+        </button>
       </div>
       <!------------------- Menu ---------------------------------->
+
+      <!--------------------- Delete Modal --------------------->
+      <div
+        class="modal fade"
+        id="deleteModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="align-self: center">
+              <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+            </div>
+            <div class="modal-body">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="deleteModalCheck"
+                />
+                <label class="form-check-label" for="deleteModalCheck">
+                  Delete approval tasks related to this request
+                </label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+                ng-click="deleteRequest()"
+              >
+                OK
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--------------------- Delete Modal --------------------->
+
+      <!--------------------- Approved + Rejeted Modal --------------------->
+      <div
+        class="modal fade"
+        id="actionRequestModal"
+        tabindex="-1"
+        aria-labelledby="actionRequestModal1"
+        aria-hidden="true"
+        data-bs-backdrop="false"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="actionRequestModal1">
+                {{actionRequestData.action === "Approved" ? "Note" : "Reason"}}
+              </h5>
+            </div>
+            <div class="modal-body">
+              <div>
+                <textarea
+                  class="form-control"
+                  id="message-text"
+                  ng-model="actionRequestData.Note"
+                ></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+                ng-click="actionRequest()"
+              >
+                {{actionRequestData.action === "Approved" ? "Approve" :
+                "Reject"}}
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--------------------- Approved + Rejeted Modal --------------------->
+
+      <!--------------------- Shared Modal --------------------->
+      <div
+        class="modal fade share-modal"
+        id="sharedModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="false"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="sharedModalLabel">Share</h5>
+            </div>
+            <div class="modal-body">
+              <div
+                class="list-share-user-dropdown"
+                custom-share-user-dropdown
+                ng-model="selectedShareUser"
+                options="userList"
+              ></div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-success"
+                style="font-size: 14px"
+                data-bs-dismiss="modal"
+                ng-click="handleShare()"
+              >
+                Share
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                style="font-size: 14px"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--------------------- Shared Modal --------------------->
 
       <div class="detail-request-body" style="margin-top: 70px">
         <h6><b>Request Code : {{detailRequest.RequestCode}}</b></h6>
@@ -228,6 +413,12 @@
           </div>
         </div>
         <!------------------- Approvers ---------------------------------->
+
+        <!------------------- Comments ---------------------------------->
+        <div
+          ng-include="'modules/Request/DetailRequest/Comment/index.html'"
+        ></div>
+        <!------------------- Comments ---------------------------------->
       </div>
     </div>
   </div>

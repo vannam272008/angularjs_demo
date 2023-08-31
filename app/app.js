@@ -14,7 +14,9 @@ angular.module('myApp', [
   'Sidebar',
   'RequestHeader',
   'CreateRequest',
-  'DetailRequest'
+  'DetailRequest',
+  'Comment',
+  'ExportExcelService'
 ])
   .config(['$locationProvider', '$routeProvider', '$sceProvider', function ($locationProvider, $routeProvider, $sceProvider) {
     $locationProvider.html5Mode(true);

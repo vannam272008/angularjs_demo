@@ -25,7 +25,8 @@ angular.module('LoginServices', [])
             isLogin: false,
             userInfo: {
                 FullName: "",
-                id: ""
+                id: "",
+                avatarPath: ""
             },
 
         };

@@ -11,8 +11,8 @@ angular.module('Request', ['ngRoute'])
     //             }
     //         })
     // }])
-    .controller('RequestController', ['$scope', '$location', 'requestService', 'requestHeaderService', 'SidebarService',
-        function ($scope, $location, requestService, requestHeaderService, SidebarService) {
+    .controller('RequestController', ['$scope', '$location', 'requestService', 'requestHeaderService', 'SidebarService', 'requestControllerService',
+        function ($scope, $location, requestService, requestHeaderService, SidebarService, requestControllerService) {
             $scope.classStatus = (status) => {
                 if (status === "Waiting for approval") {
                     return "status-approving";
@@ -83,7 +83,8 @@ angular.module('Request', ['ngRoute'])
 
             const fetchRequestList = () => {
                 $scope.loading = true;
-                requestService.getRequests($scope.tab, $scope.filter.requestCode, $scope.filter.createdFrom, $scope.filter.createdTo, $scope.filter.senderId, $scope.filter.status, $scope.pagination.currentPage, $scope.pagination.perPage, "")
+                requestService.getRequests($scope.tab, $scope.filter.requestCode, $scope.filter.createdFrom, $scope.filter.createdTo,
+                    $scope.filter.senderId, $scope.filter.status, $scope.pagination.currentPage, $scope.pagination.perPage, $scope.search)
                     .then((res) => {
                         $scope.requestList = res.data.Data.ListData;
                         $scope.pagination = {
@@ -93,6 +94,7 @@ angular.module('Request', ['ngRoute'])
                         }
                     })
                     .finally(() => {
+                        requestControllerService.setRequestData($scope.requestList);
                         $scope.loading = false;
                         $scope.test = "456";
                     })
@@ -101,8 +103,9 @@ angular.module('Request', ['ngRoute'])
                     });
             };
 
-            console.log("hello");
+            //------ First Call Api -------//
             fetchRequestList();
+            //------ First Call Api -------//
 
             $scope.$watch(() => {
                 return requestHeaderService.getFilterRequest();
@@ -117,15 +120,12 @@ angular.module('Request', ['ngRoute'])
                     };
                     $scope.pagination.currentPage = 1;
                     fetchRequestList();
-
-                    // fetchRequestList();
                 }
             });
 
             $scope.$watch(() => {
                 return SidebarService.getTab();
             }, (newTab, oldTab) => {
-                console.log("hi");
                 if (newTab !== oldTab) {
                     $scope.tab = newTab;
                     // Set default Filter
@@ -138,8 +138,6 @@ angular.module('Request', ['ngRoute'])
                     };
                     $scope.pagination.currentPage = 1;
                     requestHeaderService.setFilterRequest($scope.filter);
-                    // Set default Filter
-                    console.log("filter: ", $scope.filter);
 
 
                     fetchRequestList();
@@ -150,6 +148,7 @@ angular.module('Request', ['ngRoute'])
                 return SidebarService.getStatus();
             }, (newStatus, oldStatus) => {
                 if (newStatus !== oldStatus) {
+                    // Set default Filter
                     $scope.filter = {
                         requestCode: "",
                         createdFrom: "",
@@ -161,10 +160,37 @@ angular.module('Request', ['ngRoute'])
                     $scope.pagination.currentPage = 1;
                     requestHeaderService.setFilterRequest($scope.filter);
 
-                    console.log("filter-status: ", $scope.tab);
-
                     fetchRequestList();
                 }
             });
 
-        }]);
+            $scope.$watch(() => {
+                return SidebarService.getSearch();
+            }, (newSearch, oldSearch) => {
+                if (newSearch !== oldSearch) {
+                    $scope.search = newSearch;
+                    $scope.pagination.currentPage = 1;
+                    fetchRequestList();
+                }
+            });
+
+            // // Export Excel
+            // $scope.exportExcelData = function () {
+            //     var blob = new Blob([document.getElementById('exportable').innerHTML], {
+            //         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+            //     });
+            //     saveAs(blob, "Report.xls");
+            // };
+
+        }])
+    .service('requestControllerService', function () {
+        var requestData = [];
+        return {
+            setRequestData: function (newData) {
+                requestData = newData;
+            },
+            getRequestData: function () {
+                return requestData;
+            }
+        };
+    })

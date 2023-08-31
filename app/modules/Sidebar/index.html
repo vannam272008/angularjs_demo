@@ -16,7 +16,11 @@
   </div>
   <div class="request-sidebar">
     <div class="input-group">
-      <button class="input-group-text border-0" id="search-addon">
+      <button
+        class="input-group-text border-0"
+        id="search-addon"
+        ng-click="handleSearch()"
+      >
         <i class="fas fa-search"></i>
       </button>
       <input
@@ -25,6 +29,8 @@
         placeholder="Search"
         aria-label="Search"
         aria-describedby="search-addon"
+        ng-model="inputSearch"
+        ng-keypress="handleEnter($event)"
       />
     </div>
     <ul class="list-unstyled ps-0">

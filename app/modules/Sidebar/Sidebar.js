@@ -4,7 +4,7 @@
 //     const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 //     tooltipTriggerList.forEach(tooltipTriggerEl => {
 //         new bootstrap.Tooltip(tooltipTriggerEl)
-//     })
+//     }
 // })()
 angular.module('Sidebar', [])
     .controller('SidebarController', function ($scope, SidebarService) {
@@ -12,7 +12,7 @@ angular.module('Sidebar', [])
             $('#sidebar').toggleClass('active');
         }
 
-        $scope.clicked = "";
+        $scope.clicked = "get-all";
 
         $scope.$watchGroup([
             () => {
@@ -38,10 +38,23 @@ angular.module('Sidebar', [])
             $scope.clicked = status;
             SidebarService.setTab("get-all");
         };
+
+        $scope.inputSearch = "";
+
+        $scope.handleSearch = () => {
+            SidebarService.setSearch($scope.inputSearch);
+        }
+
+        $scope.handleEnter = ($event) => {
+            if ($event.key === "Enter" && $event.keyCode === 13) {
+                $scope.handleSearch();
+            }
+        }
     })
     .service('SidebarService', function () {
         var tab = "";
         var status = "";
+        var search = "";
         return {
             getTab: function () {
                 return tab;
@@ -54,6 +67,13 @@ angular.module('Sidebar', [])
             },
             setStatus: function (newStatus) {
                 status = newStatus;
-            }
+            },
+            getSearch: function () {
+                return search;
+            },
+            setSearch: function (newSearch) {
+                search = newSearch;
+            },
+
         }
     })
