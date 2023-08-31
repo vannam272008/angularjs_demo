@@ -50,7 +50,6 @@ angular.module('apiServices', [])
             //     formData.append(key, data[key]);
             // }
             for (var key in data) {
-                console.log("post: ", key, "data key: ", data[key]);
                 if (Array.isArray(data[key])) {
                     for (var i = 0; i < data[key].length; i++) {
                         formData.append(key, data[key][i]);

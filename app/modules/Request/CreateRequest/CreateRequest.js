@@ -17,7 +17,7 @@ angular.module('CreateRequest', ['ngRoute'])
                 // ------------ Approvers --------------------- //
                 $scope.totalApprovers = 0;
                 $scope.selectedApproverUserList = [];
-                $scope.listOfUserId = [];
+                $scope.approverUserList = [];
                 $scope.getRange = (start, end) => {
                     return getRange(start, end);
                 }
@@ -58,7 +58,7 @@ angular.module('CreateRequest', ['ngRoute'])
                         });
                 }
 
-                $scope.approverUserList = [];
+
                 // $scope.approverUserListView = [];
 
                 const getApproverUsers = (departmentId) => {
@@ -88,9 +88,7 @@ angular.module('CreateRequest', ['ngRoute'])
                 $scope.$watchCollection('selectedApproverUserList', (newSelected, oldSelected) => {
                     if (newSelected !== oldSelected) {
                         if ($scope.approverUserList.length > 0) {
-                            newSelected.map((selected) => {
-                                $scope.approverUserList = $scope.approverUserList.filter((user) => user.Id !== selected.Id);
-                            });
+                            $scope.approverUserList = $scope.approverUserListView.filter((user) => !newSelected.includes(user));
                         }
 
                     };
@@ -142,7 +140,6 @@ angular.module('CreateRequest', ['ngRoute'])
                     for (var i = 0; i < files.length; i++) {
                         $scope.files.push(files[i]);
                     }
-                    console.log($scope.files);
                     $scope.$apply();
                 }
 
@@ -186,9 +183,6 @@ angular.module('CreateRequest', ['ngRoute'])
                         && requestData.pickLocation !== "" && requestData.Destination !== "" && requestData.Reason !== ""
                     ) {
                         requestService.postRequest(requestData)
-                            .then((res) => {
-                                console.log(res);
-                            })
                             .finally(() => {
                                 $location.path('/request');
                             })
