@@ -81,7 +81,7 @@ angular.module('myApp', [
         redirectTo: () => {
           const token = localStorage.getItem('token');
           if (token !== null) {
-            return '/home';
+            return '/request';
           } else {
             return '/login';
           }

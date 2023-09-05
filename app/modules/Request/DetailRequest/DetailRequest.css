@@ -162,6 +162,12 @@
   opacity: 1;
 }
 
+.action-model .modal-header h5::after {
+  content: "*";
+  color: red;
+  margin-left: 5px;
+}
+
 .share-modal .list-share-user-dropdown .selected-option {
   cursor: pointer;
   padding: 3px 10px;

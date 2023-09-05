@@ -66,8 +66,15 @@ angular.module('CreateRequest', ['ngRoute'])
                         .then((res) => {
                             $scope.approverUserList = res.data.Data;
                             $scope.approverUserListView = $scope.approverUserList;
-                            $scope.selectedApproverUserList = $scope.approverUserList.filter((approver) => approver.Position === "Manager" || approver.Position === "Supervisor");
+
+                            // Select default approver
+                            $scope.selectedApproverUserList = $scope.approverUserList.filter((approver) => approver.Position === "Manager");
+                            var supervisorApprovers = $scope.approverUserList.filter((approver) => approver.Position === "Supervisor");
+                            supervisorApprovers.map((supervisor) => {
+                                $scope.selectedApproverUserList.push(supervisor);
+                            });
                             $scope.totalApprovers = $scope.selectedApproverUserList.length;
+                            // Select default approver
 
                         });
                 };

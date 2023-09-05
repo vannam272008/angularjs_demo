@@ -21,7 +21,7 @@ angular.module('Login', ['ngRoute', 'LoginServices'])
                                 avatarPath: res.data.Data.userInfo.AvatarPath
                             }
                         });
-                        $location.path('/home');
+                        $location.path('/request');
                         localStorage.setItem('Id', res.data.Data.userInfo.Id);
                         localStorage.setItem('token', res.data.Data.jwtToken);
                     } else {
